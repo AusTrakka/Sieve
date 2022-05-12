@@ -27,6 +27,7 @@ namespace Sieve.Services
             object[] dataForCustomMethods = null,
             bool applyFiltering = true,
             bool applySorting = true,
-            bool applyPagination = true);
+            bool applyPagination = true,
+            bool gently = false);
     }
 }

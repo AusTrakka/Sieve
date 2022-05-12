@@ -420,6 +420,17 @@ namespace SieveUnitTests
 
             Assert.Throws<SieveMethodNotFoundException>(() => _processor.Apply(model, _posts));
         }
+        
+        [Fact]
+        public void MethodNotFoundWillNotThrowWhenInGentleModeWork()
+        {
+            var model = new SieveModel
+            {
+                Filters = "does not exist",
+            };
+
+            _processor.Apply(model, _posts, gently: true);
+        }
 
         [Fact]
         public void IncompatibleMethodExceptionsWork()

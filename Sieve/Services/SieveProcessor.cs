@@ -117,10 +117,14 @@ namespace Sieve.Services
         /// <param name="applyFiltering">Should the data be filtered? Defaults to true.</param>
         /// <param name="applySorting">Should the data be sorted? Defaults to true.</param>
         /// <param name="applyPagination">Should the data be paginated? Defaults to true.</param>
+        /// <param name="gently">
+        ///     Should failed searches for custom methods throw an exception or just return the
+        ///     IQueryable that was passed to it.
+        /// </param>
         /// <returns>Returns a transformed version of `source`</returns>
         public IQueryable<TEntity> Apply<TEntity>(TSieveModel model, IQueryable<TEntity> source,
             object[] dataForCustomMethods = null, bool applyFiltering = true, bool applySorting = true,
-            bool applyPagination = true)
+            bool applyPagination = true, bool gently = false)
         {
             var result = source;
 
@@ -133,12 +137,12 @@ namespace Sieve.Services
             {
                 if (applyFiltering)
                 {
-                    result = ApplyFiltering(model, result, dataForCustomMethods);
+                    result = ApplyFiltering(model, result, dataForCustomMethods, gently);
                 }
 
                 if (applySorting)
                 {
-                    result = ApplySorting(model, result, dataForCustomMethods);
+                    result = ApplySorting(model, result, dataForCustomMethods, gently);
                 }
 
                 if (applyPagination)
@@ -165,7 +169,7 @@ namespace Sieve.Services
         }
 
         protected virtual IQueryable<TEntity> ApplyFiltering<TEntity>(TSieveModel model, IQueryable<TEntity> result,
-            object[] dataForCustomMethods = null)
+            object[] dataForCustomMethods = null, bool gently = false)
         {
             if (model?.GetFiltersParsed() == null)
             {
@@ -235,7 +239,7 @@ namespace Sieve.Services
                     else
                     {
                         result = ApplyCustomMethod(result, filterTermName, _customFilterMethods,
-                            new object[] {result, filterTerm.Operator, filterTerm.Values}, dataForCustomMethods);
+                            new object[] {result, filterTerm.Operator, filterTerm.Values}, dataForCustomMethods, gently);
                     }
                 }
 
@@ -354,7 +358,7 @@ namespace Sieve.Services
         }
 
         protected virtual IQueryable<TEntity> ApplySorting<TEntity>(TSieveModel model, IQueryable<TEntity> result,
-            object[] dataForCustomMethods = null)
+            object[] dataForCustomMethods = null, bool gently = false)
         {
             if (model?.GetSortsParsed() == null)
             {
@@ -373,7 +377,7 @@ namespace Sieve.Services
                 else
                 {
                     result = ApplyCustomMethod(result, sortTerm.Name, _customSortMethods,
-                        new object[] {result, useThenBy, sortTerm.Descending}, dataForCustomMethods);
+                        new object[] {result, useThenBy, sortTerm.Descending}, dataForCustomMethods, gently);
                 }
 
                 useThenBy = true;
@@ -431,7 +435,7 @@ namespace Sieve.Services
         }
 
         private IQueryable<TEntity> ApplyCustomMethod<TEntity>(IQueryable<TEntity> result, string name, object parent,
-            object[] parameters, object[] optionalParameters = null)
+            object[] parameters, object[] optionalParameters = null, bool gently = false)
         {
             var customMethod = parent?.GetType()
                 .GetMethodExt(name,
@@ -481,12 +485,14 @@ namespace Sieve.Services
                     }
                     else
                     {
-                        throw;
+                        if(!gently) throw;
                     }
                 }
             }
             else
             {
+                if (gently) return result;
+                
                 var incompatibleCustomMethods =
                     parent?
                         .GetType()

@@ -1,16 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>   
+    <TargetFramework>net6.0</TargetFramework>   
     <Description>Sieve is a simple, clean, and extensible framework for .NET Core that adds sorting, filtering, and pagination functionality out of the box. Most common use case would be for serving ASP.NET Core GET queries. Documentation available on GitHub: https://github.com/Biarity/Sieve/</Description>
-    <Authors>Biarity;Ashish Patel;Kevin Sommer</Authors>
+    <PackageId>Sieve-Austrakka</PackageId>
+    <Version>1.0.0</Version>
+    <Company>Doherty</Company>
+    <Authors>Austrakka</Authors>
 
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>Filter;Sort;Page;Paging;</PackageTags>
-    <PackageProjectUrl>https://github.com/Biarity/Sieve</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/viatunimelb/Sieve</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
-    <RepositoryUrl>https://github.com/Biarity/Sieve</RepositoryUrl>
+    <RepositoryUrl>https://github.com/viatunimelb/Sieve</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <!-- Declare that the Repository URL can be published to NuSpec -->
@@ -19,6 +23,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <!-- Include PDB in the built .nupkg -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <AssemblyVersion>2.5.501</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
