@@ -10,24 +10,22 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NuGetCommand@2
+- task: NuGet Restore
   inputs:
     command: 'restore'
     feedsToUse: 'select'
     vstsFeed: 'austrakka/austrakka-feed'
     includeNuGetOrg: false
     restoreSolution: ' Sieve/Sieve.sln'
-- task: NuGetCommand@2
+- task: NuGet Pack
   inputs:
     command: 'pack'
     packagesToPack: 'Sieve/Sieve.csproj'
     packDestination: '$(Build.ArtifactStagingDirectory)'
-- task: NuGetAuthenticate@0
-  displayName: 'NuGet Authenticate'
-- task: NuGetCommand@2
+- task: NuGet Push
   displayName: 'NuGet push'
   inputs:
     command: push
     publishVstsFeed: 'austrakka/austrakka-feed'
-    allowPackageConflicts: true
+    nuGetFeedType: 'internal'
 
