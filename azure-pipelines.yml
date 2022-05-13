@@ -18,6 +18,10 @@ steps:
     vstsFeed: 'austrakka/austrakka-feed'
     includeNuGetOrg: false
     restoreSolution: ' Sieve/Sieve.sln'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'Sieve/Sieve.csproj'
 - task: NuGetCommand@2
   displayName: NuGet Pack
   inputs:
