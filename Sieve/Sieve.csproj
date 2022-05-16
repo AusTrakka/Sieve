@@ -10,11 +10,11 @@
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>Filter;Sort;Page;Paging;</PackageTags>
-    <PackageProjectUrl>https://github.com/viatunimelb/Sieve</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AusTrakka/Sieve</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
-    <RepositoryUrl>https://github.com/viatunimelb/Sieve</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AusTrakka/Sieve</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <!-- Declare that the Repository URL can be published to NuSpec -->
