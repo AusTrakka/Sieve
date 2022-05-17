@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NuGetCommand@2
+  displayName: NuGet Restore
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    vstsFeed: 'austrakka/austrakka-feed'
+    includeNuGetOrg: false
+    restoreSolution: ' Sieve/Sieve.sln'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'Sieve/Sieve.csproj'
+- task: NuGetCommand@2
+  displayName: NuGet Pack
+  inputs:
+    command: 'pack'
+    packagesToPack: 'Sieve/Sieve.csproj'
+    packDestination: '$(Build.ArtifactStagingDirectory)'
+- task: NuGetAuthenticate@0
+  displayName: NuGet Authenticate
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    publishVstsFeed: 'austrakka/austrakka-feed'
+    nuGetFeedType: 'internal'
+
