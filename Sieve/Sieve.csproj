@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>   
     <Description>Sieve is a simple, clean, and extensible framework for .NET Core that adds sorting, filtering, and pagination functionality out of the box. Most common use case would be for serving ASP.NET Core GET queries. Documentation available on GitHub: https://github.com/Biarity/Sieve/</Description>
     <PackageId>Sieve-Austrakka</PackageId>
-    <Version>1.0.0-AT</Version>
+    <Version>2.5.5-AT</Version>
     <Company>Doherty</Company>
     <Authors>Austrakka</Authors>
 
