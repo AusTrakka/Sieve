@@ -6,6 +6,9 @@
 trigger:
 - master
 
+# Do not trigger builds on PRs
+pr: none
+
 pool:
   vmImage: ubuntu-latest
 
